@@ -20,10 +20,7 @@ namespace CalculatorTestVirtuplex
                 while (!reader.EndOfStream) 
                 { 
                     var lineSegments = readInputLineHandler.ReadLine(await reader.ReadLineAsync());
-                    foreach(var segment in lineSegments)
-                    {
-                        calculateLineHandler.CalculateExpression(segment.LeftNumber, segment.RightNumber, segment.CalculationOperator);
-                    }
+                    calculateLineHandler.CalculateExpression();
                     var resultForLine = calculateLineHandler.Evaluation();
                 }
             }
