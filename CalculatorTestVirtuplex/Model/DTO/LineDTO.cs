@@ -6,5 +6,6 @@ namespace CalculatorTestVirtuplex.Model.DTO
     {
         public List<int> Numbers { get; set; }
         public List<string> Operators { get; set; }
+        public List<string> Errors { get; set; }
     }
 }

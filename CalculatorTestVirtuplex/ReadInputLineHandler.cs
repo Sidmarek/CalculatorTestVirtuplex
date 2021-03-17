@@ -13,7 +13,11 @@ namespace CalculatorTestVirtuplex
 
         public LineDTO ReadLine(string line)
         {
-            var line
+            var lineDTO = new LineDTO();
+            lineDTO.Numbers = new List<int>();
+            lineDTO.Operators = new List<string>();
+            lineDTO.Errors = new List<string>();
+
             //var lineSegments = new List<LineSegmentDTO>();
             //Splits input file by space on scheme number, operator. number
             var splittedLineBySpace = line.Split(new char[] { ' ' }, System.StringSplitOptions.RemoveEmptyEntries);
@@ -21,13 +25,19 @@ namespace CalculatorTestVirtuplex
             foreach (var lineSegment in splittedLineBySpace) 
             {
 
-                if (int.TryParse(splittedLineBySpace[i], out int firstNumber))
+                if (int.TryParse(lineSegment, out int number))
                 {
-                    lineSegmentDTO.LeftNumber = firstNumber;
+                    lineDTO.Numbers.Add(number);
                 }
                 else
                 {
-                    lineSegmentDTO.Error = "";
+                    if(lineSegment.Contains("/") || lineSegment.Contains("*") ||
+                        lineSegment.Contains("+") || lineSegment.Contains("-"))
+                        lineDTO.Errors.Add(lineSegment);
+                    else
+                    {
+                        lineDTO.Errors.Add($" Found unxpected segment of line: {lineSegment}.");
+                    }
                 }
 
             }
@@ -75,7 +85,7 @@ namespace CalculatorTestVirtuplex
             //    lineSegments.Add(lineSegmentDTO);
             //}
 
-            return lineSegments;
+            return lineDTO;
         }
     }
 }
